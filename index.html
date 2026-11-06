@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dotColin Work</title>
+<meta name="description" content="Colin — freelance video editor, channel manager, content producer and thumbnail designer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&family=Pixelify+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>try{if(matchMedia("(min-width: 900px) and (pointer: fine)").matches)document.documentElement.className+=" boot"}catch(e){}</script>
+<style>
+  :root{
+    --ink:#000;
+    --navy:#000080;
+    --blue:#1084d0;
+    --face:#c0c0c0;
+    --shade:#808080;
+    --hi:#fff;
+    --dark:#000;
+    --field:#fff;
+    --sky:#3a7bd5;
+    --cyan:#00ffff;
+    --title: linear-gradient(90deg,#000080 0%,#1084d0 100%);
+    --bevel-out: inset -1px -1px 0 var(--dark), inset 1px 1px 0 var(--hi), inset -2px -2px 0 var(--shade), inset 2px 2px 0 #dfdfdf;
+    --bevel-in: inset -1px -1px 0 var(--hi), inset 1px 1px 0 var(--shade), inset -2px -2px 0 #dfdfdf, inset 2px 2px 0 var(--dark);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:Tahoma,Verdana,"Segoe UI",system-ui,sans-serif;
+    color:var(--ink);
+    /* Win98 "Clouds" style wallpaper */
+    background-color:#5b8fd6;
+    background-image:
+      radial-gradient(ellipse 180px 60px at 12% 18%,rgba(255,255,255,.85),transparent 70%),
+      radial-gradient(ellipse 120px 45px at 20% 15%,rgba(255,255,255,.7),transparent 70%),
+      radial-gradient(ellipse 220px 70px at 78% 10%,rgba(255,255,255,.8),transparent 70%),
+      radial-gradient(ellipse 140px 50px at 88% 14%,rgba(255,255,255,.65),transparent 70%),
+      radial-gradient(ellipse 200px 65px at 60% 48%,rgba(255,255,255,.7),transparent 70%),
+      radial-gradient(ellipse 160px 55px at 8% 62%,rgba(255,255,255,.75),transparent 70%),
+      radial-gradient(ellipse 240px 70px at 85% 75%,rgba(255,255,255,.7),transparent 70%),
+      radial-gradient(ellipse 170px 55px at 35% 90%,rgba(255,255,255,.75),transparent 70%),
+      linear-gradient(180deg,#2f6bc4 0%,#5b9be6 50%,#8fc2f5 100%);
+    background-attachment:fixed;
+    min-height:100vh;
+    line-height:1.5;
+    font-size:15px;
+    padding-bottom:70px;
+  }
+  a{color:#0000ee}
+  ::selection{background:var(--navy);color:#fff}
+
+  /* ---------- taskbar (bottom, like Win98) ---------- */
+  .taskbar{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    display:flex;align-items:center;gap:4px;flex-wrap:nowrap;
+    padding:3px 4px;height:36px;
+    background:var(--face);
+    box-shadow:inset 0 1px 0 #dfdfdf, inset 0 2px 0 var(--hi);
+  }
+  .start{
+    cursor:pointer;border:0;font-family:inherit;
+    font-weight:700;font-size:14px;color:#000;text-decoration:none;
+    display:flex;align-items:center;gap:6px;
+    padding:3px 10px;height:28px;
+    background:var(--face);box-shadow:var(--bevel-out);
+  }
+  .start .flag{display:inline-grid;grid-template-columns:7px 7px;gap:1px;transform:skewY(-6deg)}
+  .start .flag i{width:7px;height:6px;display:block}
+  .start:active{box-shadow:var(--bevel-in)}
+  .taskbar nav{display:flex;gap:4px;overflow-x:auto}
+  .taskbar nav a{
+    font-size:13px;color:#000;text-decoration:none;white-space:nowrap;
+    padding:4px 12px;height:28px;display:flex;align-items:center;min-width:90px;
+    background:var(--face);box-shadow:var(--bevel-out);
+  }
+  .taskbar nav a:hover{background:#d4d0c8}
+  .taskbar nav a:active{box-shadow:var(--bevel-in)}
+  .clock{margin-left:auto;font-size:13px;padding:4px 12px;height:28px;display:flex;align-items:center;
+    box-shadow:inset -1px -1px 0 var(--hi), inset 1px 1px 0 var(--shade)}
+
+  /* ---------- layout ---------- */
+  main{max-width:960px;margin:0 auto;padding:32px 16px 0}
+
+  /* ---------- window chrome ---------- */
+  .win{
+    background:var(--face);
+    padding:3px;
+    box-shadow:var(--bevel-out), 6px 6px 0 rgba(0,0,40,.35);
+    margin:0 0 30px;
+  }
+  .win-bar{
+    display:flex;align-items:center;gap:6px;
+    padding:3px 3px 3px 6px;
+    background:var(--title);
+    color:#fff;font-weight:700;font-size:13px;
+  }
+  .win-bar .ico{font-size:14px}
+  .win-btns{margin-left:auto;display:flex;gap:2px}
+  .win-btns button{
+    padding:0;border:0;cursor:pointer;font-family:inherit;
+    width:18px;height:16px;display:grid;place-items:center;
+    font-size:11px;font-weight:700;line-height:1;color:#000;
+    background:var(--face);box-shadow:var(--bevel-out);
+  }
+  .win-btns button:last-child{margin-left:2px}
+  .win-btns button:active{box-shadow:var(--bevel-in)}
+  .win-btns button:focus-visible{outline:1px dotted #000;outline-offset:-4px}
+  .win-bar{user-select:none}
+  .win.min .win-body{display:none}
+  .win.closed{display:none}
+  .win.max{position:fixed;left:0;right:0;top:0;bottom:36px;z-index:40;margin:0;overflow:auto;box-shadow:var(--bevel-out)}
+  .win.max .win-bar{position:sticky;top:0;z-index:5}
+  body.has-max{overflow:hidden}
+  .win.flash .win-bar{animation:flash .5s steps(2) 2}
+  @keyframes flash{50%{background:#808080}}
+
+  /* ---------- start menu ---------- */
+  .start-menu{
+    position:fixed;left:2px;bottom:38px;z-index:60;display:none;
+    width:250px;background:var(--face);box-shadow:var(--bevel-out), 3px 3px 0 rgba(0,0,0,.3);
+    padding:3px 3px 3px 30px;
+  }
+  .start-menu.open{display:block}
+  .start-menu::before{
+    content:"dotColin 98";position:absolute;left:3px;top:3px;bottom:3px;width:24px;
+    background:linear-gradient(0deg,#000080,#1084d0);color:#c0c0c0;
+    writing-mode:vertical-rl;transform:rotate(180deg);
+    font-weight:900;font-size:16px;letter-spacing:.04em;padding-top:8px;
+  }
+  .start-menu button{
+    display:flex;align-items:center;gap:10px;width:100%;
+    padding:6px 8px;border:0;background:none;text-align:left;cursor:pointer;
+    font:inherit;font-size:13px;color:#000;
+  }
+  .start-menu button:hover,.start-menu button:focus-visible{background:#000080;color:#fff;outline:none}
+  .start-menu .ico{width:18px;text-align:center}
+  .start-menu .state{margin-left:auto;font-size:11px;opacity:.7}
+  .start-menu hr{border:0;border-top:1px solid var(--shade);border-bottom:1px solid #fff;margin:3px 0}
+  .start.on{box-shadow:var(--bevel-in)}
+  .restore-btn{display:none!important;font-size:13px;color:#000;cursor:pointer;
+    padding:4px 10px;height:28px;align-items:center;gap:4px;border:0;font-family:inherit;
+    background:var(--face);box-shadow:var(--bevel-out)}
+  .restore-btn.show{display:flex!important}
+  .restore-btn:active{box-shadow:var(--bevel-in)}
+  .win-body{padding:18px}
+
+  /* ---------- hero ---------- */
+  .hero{display:grid;grid-template-columns:190px 1fr;gap:24px;align-items:center}
+  .avatar{
+    width:190px;height:190px;
+    display:grid;place-items:center;
+    background:
+      radial-gradient(circle at 30% 25%,rgba(255,255,255,.9) 0 10%,transparent 32%),
+      linear-gradient(135deg,#00ffff 0%,#1084d0 50%,#000080 100%);
+    box-shadow:var(--bevel-in);
+    border:3px solid var(--face);
+    font-family:"Silkscreen",monospace;font-weight:700;font-size:64px;color:#fff;
+    text-shadow:3px 3px 0 #000080;
+    position:relative;
+  }
+  .avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+  .avatar:has(img)::after{display:none}
+  .avatar::after{content:"✦";position:absolute;top:8px;right:14px;font-size:28px;color:#fff;
+    animation:twinkle 1.6s infinite}
+  .hi{
+    font-family:Tahoma,Verdana,"Segoe UI",system-ui,sans-serif;font-weight:900;
+    font-size:clamp(36px,6.5vw,60px);line-height:1.05;margin:0 0 10px;color:#000;
+    letter-spacing:-.01em;
+  }
+  .stim-body{padding:0!important;background:#000;display:flex;align-items:center;justify-content:center}
+  .stim-body .thumb{width:100%;border:0;box-shadow:none}
+  .win.max .stim-body .thumb,.desk-mode .win[style*="height"] .stim-body .thumb{height:100%;aspect-ratio:auto}
+  .sw-body{background:#fff;box-shadow:var(--bevel-in);margin:2px}
+  .apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:14px 6px}
+  .app{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:#000;padding:6px 2px;font-size:13px;text-align:center}
+  .app-i{width:52px;height:52px;display:grid;place-items:center;font-size:30px;line-height:1;
+    background:linear-gradient(135deg,#e8e8e8,#bdbdbd);box-shadow:var(--bevel-out)}
+  .app-l{padding:0 3px;line-height:1.25}
+  .app:hover .app-l,.app:focus-visible .app-l{background:#000080;color:#fff;outline:1px dotted #000}
+  .app:hover .app-i{filter:brightness(.92)}
+  .app:focus-visible{outline:none}
+  .statusbar{display:flex;gap:4px;font-size:12px;margin-top:2px}
+  .statusbar span{flex:1;padding:2px 6px;box-shadow:inset -1px -1px 0 #fff, inset 1px 1px 0 var(--shade)}
+  .statusbar span:last-child{flex:0 0 auto}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:4px 0 14px}
+  .stats div{background:#fff;box-shadow:var(--bevel-in);padding:10px 12px;font-size:13px}
+  .stats b{display:block;font-family:"VT323",monospace;font-weight:400;font-size:34px;line-height:1;color:#000080}
+  .tagline{font-size:16px;margin:0 0 14px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0;list-style:none}
+  .tags li{
+    font-size:13px;padding:5px 12px;
+    background:var(--face);box-shadow:var(--bevel-out);
+  }
+
+  /* ---------- marquee ---------- */
+  .marquee{
+    flex:0 0 auto;overflow:hidden;white-space:nowrap;margin:0;
+    background:#000080;color:#ffff00;
+    box-shadow:var(--bevel-in);border:3px solid var(--face);
+    font-family:"VT323",monospace;font-size:26px;padding:4px 0;
+  }
+  .marquee span{display:inline-block;padding-left:100%;animation:scroll 22s linear infinite}
+
+  /* ---------- clients ---------- */
+  .clients{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .card{
+    display:block;text-decoration:none;color:#000;
+    padding:14px;background:var(--field);box-shadow:var(--bevel-in);
+  }
+  .card:hover{background:#000080;color:#fff}
+  .card:hover .subs,.card:hover .subs small{color:#fff}
+  .logo{width:64px;height:64px;object-fit:cover;display:block;margin-bottom:10px;
+    border:2px solid var(--face);box-shadow:var(--bevel-out)}
+  .thumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3}
+  .thumb.playing::after{display:none}
+  .orb{
+    width:48px;height:48px;margin-bottom:10px;
+    display:grid;place-items:center;
+    font-family:"Silkscreen",monospace;font-weight:700;font-size:20px;color:#fff;
+    text-shadow:1px 1px 0 #000;
+    box-shadow:var(--bevel-out);
+  }
+  .card h3{margin:0;font-size:14px;line-height:1.2}
+  .subs{font-family:"VT323",monospace;font-size:30px;color:#000080;line-height:1;margin-top:6px}
+  .subs small{font-size:18px;color:#000}
+
+  /* ---------- work ---------- */
+  .role{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    background:#000080;color:#fff;padding:2px 8px;margin-bottom:10px}
+  .win-body p{margin:0 0 10px;font-size:15px}
+  .thumbs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:14px}
+  .thumb{
+    position:relative;display:block;aspect-ratio:16/9;overflow:hidden;
+    border:3px solid var(--face);box-shadow:var(--bevel-in);
+    background:linear-gradient(135deg,#000080,#1084d0 60%,#5fd0ff);
+  }
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1}
+  .thumb::after{
+    content:"▶";position:absolute;z-index:2;inset:0;margin:auto;
+    width:44px;height:36px;display:grid;place-items:center;
+    color:#000;font-size:16px;
+    background:var(--face);box-shadow:var(--bevel-out);
+    opacity:0;transition:opacity .15s;
+  }
+  .thumb:not(:has(img))::after,.thumb:hover::after{opacity:1}
+
+  .btn{
+    display:inline-block;margin-top:12px;
+    font-size:14px;text-decoration:none;color:#000;
+    padding:7px 18px;background:var(--face);box-shadow:var(--bevel-out);
+    outline:1px dotted #000;outline-offset:-6px;
+  }
+  .btn:active{box-shadow:var(--bevel-in)}
+
+  /* ---------- links / contact ---------- */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .badges{display:flex;flex-wrap:wrap;gap:8px}
+  .badge{
+    width:88px;height:31px;display:flex;align-items:center;justify-content:center;gap:4px;
+    font-family:"Silkscreen",monospace;font-size:9px;text-decoration:none;color:#fff;
+    border:1px solid #000;outline:1px solid #fff;outline-offset:-3px;
+    text-shadow:1px 1px 0 #000;
+  }
+  .badge b{font-size:13px}
+  .b-yt{background:linear-gradient(180deg,#ff6b6b,#c40000)}
+  .b-tw{background:linear-gradient(180deg,#5a5a5a,#000)}
+  .b-tv{background:linear-gradient(180deg,#b08cff,#6a2fd1)}
+  .b-lb{background:linear-gradient(90deg,#ff8000 0 33%,#00e054 33% 66%,#40bcf4 66%)}
+  .badge:hover{filter:brightness(1.15)}
+  .mail{
+    font-family:"VT323",monospace;font-size:24px;
+    display:block;padding:10px 12px;margin-top:8px;
+    background:#000;color:#c0c0c0;border:3px solid var(--face);box-shadow:var(--bevel-in);
+    text-decoration:none;word-break:break-all;
+  }
+  .mail::before{content:"C:\> ";color:#fff}
+
+  /* ---------- footer ---------- */
+  footer{text-align:center;color:#fff;font-family:"VT323",monospace;font-size:20px;padding:10px 16px;
+    text-shadow:1px 1px 0 #000040}
+  .construction{
+    display:inline-block;margin:6px 0 12px;padding:4px 14px;
+    font-family:"Silkscreen",monospace;font-size:12px;color:#000;text-shadow:none;
+    background:repeating-linear-gradient(45deg,#ffd400 0 12px,#000 12px 24px);
+  }
+  .construction span{background:#ffd400;padding:2px 8px}
+  .blink{animation:blink 1s steps(1) infinite}
+
+  /* ---------- sparkle trail ---------- */
+  .spark{position:fixed;pointer-events:none;z-index:999;font-size:14px;
+    text-shadow:0 0 2px #000080;animation:fall .8s ease-out forwards}
+
+
+  html.boot section.win:not(#welcome){visibility:hidden}
+  .win{container-type:inline-size}
+  .card{display:flex;align-items:center;gap:12px;padding:12px}
+  .card .logo{margin:0;flex:0 0 auto;width:56px;height:56px}
+  .card .subs{margin-top:2px;white-space:nowrap;font-size:28px}
+  .ctext{min-width:0}
+  @container (max-width:640px){
+    .two{grid-template-columns:1fr;gap:16px}
+  }
+  /* ---------- desktop mode: draggable / resizable windows ---------- */
+  html{overflow-x:hidden}
+  .desk-mode main{position:relative;z-index:1;pointer-events:none}
+  .desk-mode main > *{pointer-events:auto}
+  .desk-mode .win{position:absolute;margin:0}
+  .desk-mode .win{display:flex;flex-direction:column}
+  .desk-mode .win .win-body{flex:1 1 auto;min-height:0;overflow:auto}
+  .desk-mode .win-bar{touch-action:none}
+  .desk-mode .win.tb-min,.desk-mode .win.closed{display:none}
+  .win.inactive .win-bar{background:linear-gradient(90deg,#808080,#b5b5b5);color:#dcdcdc}
+  .win.max,.desk-mode .win.max{position:fixed;left:0!important;top:0!important;right:0;bottom:36px;width:auto!important;height:auto!important;margin:0}
+  .rz{display:none;position:absolute;z-index:6}
+  .desk-mode .rz{display:block}
+  .desk-mode .win.max .rz{display:none}
+  .rz-n{top:-3px;left:8px;right:8px;height:7px;cursor:ns-resize}
+  .rz-s{bottom:-3px;left:8px;right:8px;height:7px;cursor:ns-resize}
+  .rz-e{right:-3px;top:8px;bottom:8px;width:7px;cursor:ew-resize}
+  .rz-w{left:-3px;top:8px;bottom:8px;width:7px;cursor:ew-resize}
+  .rz-ne{top:-3px;right:-3px;width:12px;height:12px;cursor:nesw-resize}
+  .rz-sw{bottom:-3px;left:-3px;width:12px;height:12px;cursor:nesw-resize}
+  .rz-nw{top:-3px;left:-3px;width:12px;height:12px;cursor:nwse-resize}
+  .rz-se{bottom:0;right:0;width:15px;height:15px;cursor:nwse-resize;
+    background:linear-gradient(135deg,transparent 0 45%,#fff 45% 52%,#808080 52% 59%,transparent 59% 66%,#fff 66% 73%,#808080 73% 80%,transparent 80%)}
+  body.dragging{user-select:none}
+  body.dragging iframe{pointer-events:none}
+
+  /* taskbar window buttons */
+  .tb-wins{display:none;flex:1 1 auto;min-width:0;gap:3px;overflow:hidden}
+  .desk-mode .tb-wins{display:flex}
+  .desk-mode .taskbar nav{display:none}
+  .tb-win{
+    flex:0 1 160px;min-width:40px;height:28px;display:flex;align-items:center;gap:6px;
+    padding:0 8px;border:0;cursor:pointer;font:inherit;font-size:13px;color:#000;text-align:left;
+    background:var(--face);box-shadow:var(--bevel-out);
+  }
+  .tb-win .t{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .tb-win.active{font-weight:700;box-shadow:var(--bevel-in);
+    background:repeating-conic-gradient(#fff 0 25%,#c0c0c0 0 50%) 0 0/2px 2px}
+
+  /* desktop icons */
+  .icons{position:fixed;left:8px;top:12px;z-index:0;display:none;flex-direction:column;gap:10px}
+  .desk-mode .icons{display:flex}
+  .dicon{width:78px;padding:4px 2px;border:0;background:none;cursor:pointer;color:#fff;
+    font:inherit;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .dicon .i{font-size:30px;line-height:1;filter:drop-shadow(1px 1px 0 rgba(0,0,0,.4))}
+  .dicon .l{padding:0 3px;text-shadow:1px 1px 0 #000;word-break:break-all;text-align:center;line-height:1.25}
+  .dicon.sel .i{filter:drop-shadow(1px 1px 0 rgba(0,0,0,.4)) sepia(1) hue-rotate(190deg) saturate(4) brightness(.7)}
+  .dicon.sel .l{background:#000080;outline:1px dotted #fff;text-shadow:none}
+  .dicon:focus-visible{outline:none}
+
+  @keyframes scroll{to{transform:translateX(-100%)}}
+  @keyframes twinkle{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+  @keyframes blink{50%{opacity:0}}
+  @keyframes fall{to{transform:translateY(24px) scale(.3);opacity:0}}
+
+  @media (max-width:700px){
+    .hero{grid-template-columns:1fr;text-align:center}
+    .avatar{margin:0 auto;width:150px;height:150px;font-size:48px}
+    .tags{justify-content:center}
+    .two{grid-template-columns:1fr}
+    .clock{display:none}
+    .taskbar nav a{min-width:0;padding:4px 8px}
+    .restore-btn .rl{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .marquee span{padding-left:12px}
+  }
+</style>
+</head>
+<body>
+
+
+<div class="icons" id="icons" aria-label="Desktop icons"></div>
+<main id="top">
+
+  <!-- WELCOME -->
+  <section class="win" id="welcome" data-w="720">
+    <div class="win-bar"><span class="ico">💾</span> welcome.exe <div class="win-btns"><button type="button" data-act="min" aria-label="Minimize">_</button><button type="button" data-act="max" aria-label="Maximize">□</button><button type="button" data-act="close" aria-label="Close">×</button></div></div>
+    <div class="win-body hero">
+      <!-- Your profile picture: save it as images/me.jpg -->
+      <div class="avatar"><img src="images/me.jpg" alt="Colin" onerror="this.remove()"><span aria-hidden="true">C</span></div>
+      <div>
+        <h1 class="hi">Hi, I'm Colin!</h1>
+        <p class="tagline">Full-time freelance creative for YouTube — I've worked on channels from <b>100K</b> to over <b>15M</b> subscribers.</p>
+        <ul class="tags">
+          <li>video editor</li>
+          <li>channel manager</li>
+          <li>content producer</li>
+          <li>thumbnail designer</li>
+        </ul>
+      </div>
+    </div>
+    <div class="marquee" aria-hidden="true"><span>★ video editing ★ channel management ★ content production ★ thumbnail design ★ long-form ★ shorts ★</span></div>
+  </section>
+
+
+  <!-- CLIENTS -->
+  <section class="win" id="clients" data-w="540">
+    <div class="win-bar"><span class="ico">📁</span> C:\clients <div class="win-btns"><button type="button" data-act="min" aria-label="Minimize">_</button><button type="button" data-act="max" aria-label="Maximize">□</button><button type="button" data-act="close" aria-label="Close">×</button></div></div>
+    <div class="win-body">
+      <div class="clients">
+        <a class="card" href="#jrwi">
+          <img class="logo" src="images/jrwi.jpg" alt="Just Roll With It logo">
+          <div class="ctext"><h3>Just Roll With It</h3><div class="subs">374K <small>subs</small></div></div>
+        </a>
+        <a class="card" href="#connor">
+          <img class="logo" src="images/connoreatspants.jpg" alt="ConnorEatsPants logo">
+          <div class="ctext"><h3>ConnorEatsPants</h3><div class="subs">266K <small>subs</small></div></div>
+        </a>
+        <a class="card" href="#alpharad">
+          <img class="logo" src="images/alpharad.jpg" alt="Alpharad logo">
+          <div class="ctext"><h3>Alpharad</h3><div class="subs">3.88M <small>subs</small></div></div>
+        </a>
+        <a class="card" href="#jaiden">
+          <img class="logo" src="images/jaiden.jpg" alt="Jaiden Animations logo">
+          <div class="ctext"><h3>Jaiden Animations</h3><div class="subs">15.3M <small>subs</small></div></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- JRWI -->
+  <section class="win" id="jrwi" data-w="560">
+    <div class="win-bar"><span class="ico">🎲</span> just_roll_with_it.mp4 <div class="win-btns"><button type="button" data-act="min" aria-label="Minimize">_</button><button type="button" data-act="max" aria-label="Maximize">□</button><button type="button" data-act="close" aria-label="Close">×</button></div></div>
+    <div class="win-body">
+      <span class="role">video editor</span>
+      <p>Edited long-form videos and shorts for this Dungeons &amp; Dragons channel, and gave feedback and review on other editors' work.</p>
+      <div class="thumbs">
+        <a class="thumb" href="https://www.youtube.com/watch?v=54WcJtR0SrU" data-id="54WcJtR0SrU" aria-label="Play Just Roll With It video 1"><img src="https://i.ytimg.com/vi/54WcJtR0SrU/hqdefault.jpg" alt="Just Roll With It video 1" loading="lazy" onerror="this.remove()"></a>
+        <a class="thumb" href="https://www.youtube.com/watch?v=ZBfrP9H1thc" data-id="ZBfrP9H1thc" aria-label="Play Just Roll With It video 2"><img src="https://i.ytimg.com/vi/ZBfrP9H1thc/hqdefault.jpg" alt="Just Roll With It video 2" loading="lazy" onerror="this.remove()"></a>
+        <a class="thumb" href="https://www.youtube.com/watch?v=RnYy762GupQ" data-id="RnYy762GupQ" aria-label="Play Just Roll With It video 3"><img src="https://i.ytimg.com/vi/RnYy762GupQ/hqdefault.jpg" alt="Just Roll With It video 3" loading="lazy" onerror="this.remove()"></a>
+        <a class="thumb" href="https://www.youtube.com/watch?v=xGjHYUYQ7Y8" data-id="xGjHYUYQ7Y8" aria-label="Play Just Roll With It video 4"><img src="https://i.ytimg.com/vi/xGjHYUYQ7Y8/hqdefault.jpg" alt="Just Roll With It video 4" loading="lazy" onerror="this.remove()"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONNOREATSPANTS -->
+  <section class="win" id="connor" data-w="560">
+    <div class="win-bar"><span class="ico">👖</span> connoreatspants.mp4 <div class="win-btns"><button type="button" data-act="min" aria-label="Minimize">_</button><button type="button" data-act="max" aria-label="Maximize">□</button><button type="button" data-act="close" aria-label="Close">×</button></div></div>
+    <div class="win-body">
+      <span class="role">channel manager · editor</span>
+      <p>Ran the channel's day-to-day at 255K subscribers: daily uploads and scheduling, plus managing the other people on the team.</p>
+      <p>Helped grow the channel by 29K+ subscribers in just two months, and edited Shorts, TikToks and clips to push its reach across platforms — 4.6M+ views gained along the way.</p>
+      <div class="thumbs">
+        <a class="thumb" href="https://www.youtube.com/watch?v=H9KtR3slkYM" data-id="H9KtR3slkYM" aria-label="Play ConnorEatsPants video 1"><img src="https://i.ytimg.com/vi/H9KtR3slkYM/hqdefault.jpg" alt="ConnorEatsPants video 1" loading="lazy" onerror="this.remove()"></a>
+        <a class="thumb" href="https://www.youtube.com/watch?v=zAULdnUJJsg" data-id="zAULdnUJJsg" aria-label="Play ConnorEatsPants video 2"><img src="https://i.ytimg.com/vi/zAULdnUJJsg/hqdefault.jpg" alt="ConnorEatsPants video 2" loading="lazy" onerror="this.remove()"></a>
+        <a class="thumb" href="https://www.youtube.com/watch?v=J-zdhcMptHg" data-id="J-zdhcMptHg" aria-label="Play ConnorEatsPants video 3"><img src="https://i.ytimg.com/vi/J-zdhcMptHg/hqdefault.jpg" alt="ConnorEatsPants video 3" loading="lazy" onerror="this.remove()"></a>
+        <a class="thumb" href="https://www.youtube.com/watch?v=ozG-OJvHYG8" data-id="ozG-OJvHYG8" aria-label="Play ConnorEatsPants video 4"><img src="https://i.ytimg.com/vi/ozG-OJvHYG8/hqdefault.jpg" alt="ConnorEatsPants video 4" loading="lazy" onerror="this.remove()"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALPHARAD -->
+  <section class="win" id="alpharad" data-w="560">
+    <div class="win-bar"><span class="ico">🎮</span> alpharad.mp4 <div class="win-btns"><button type="button" data-act="min" aria-label="Minimize">_</button><button type="button" data-act="max" aria-label="Maximize">□</button><button type="button" data-act="close" aria-label="Close">×</button></div></div>
+    <div class="win-body">
+      <span class="role">video editor → channel manager</span>
+      <p>Started as a video editor, then became manager of <b>Alpharad Platinum</b> — handling thumbnails, uploads, Patreon management and series direction.</p>
+      <p>Also edited long-form let's plays for the sister channel <b>The After Party</b>.</p>
+      <div class="thumbs">
+        <a class="thumb" href="https://www.youtube.com/watch?v=j9J0v5lAquo" data-id="j9J0v5lAquo" aria-label="Play Alpharad video 1"><img src="https://i.ytimg.com/vi/j9J0v5lAquo/hqdefault.jpg" alt="Alpharad video 1" loading="lazy" onerror="this.remove()"></a>
+        <a class="thumb" href="https://www.youtube.com/watch?v=nw58RsQvWiw" data-id="nw58RsQvWiw" aria-label="Play Alpharad video 2"><img src="https://i.ytimg.com/vi/nw58RsQvWiw/hqdefault.jpg" alt="Alpharad video 2" loading="lazy" onerror="this.remove()"></a>
+        <a class="thumb" href="https://www.youtube.com/watch?v=gvjP_gq1XUo" data-id="gvjP_gq1XUo" aria-label="Play Alpharad video 3"><img src="https://i.ytimg.com/vi/gvjP_gq1XUo/hqdefault.jpg" alt="Alpharad video 3" loading="lazy" onerror="this.remove()"></a>
+        <a class="thumb" href="https://www.youtube.com/watch?v=iJsUi2SPwcE" data-id="iJsUi2SPwcE" aria-label="Play Alpharad video 4"><img src="https://i.ytimg.com/vi/iJsUi2SPwcE/hqdefault.jpg" alt="Alpharad video 4" loading="lazy" onerror="this.remove()"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- JAIDEN -->
+  <section class="win" id="jaiden" data-w="460">
+    <div class="win-bar"><span class="ico">🐦</span> shortform_jaiden.mp4 <div class="win-btns"><button type="button" data-act="min" aria-label="Minimize">_</button><button type="button" data-act="max" aria-label="Maximize">□</button><button type="button" data-act="close" aria-label="Close">×</button></div></div>
+    <div class="win-body">
+      <span class="role">shorts editor</span>
+      <p>Began editing shorts for Jaiden Animations in December 2023. The project changed direction before they were uploaded, so the edits live in my folder below.</p>
+      <a class="btn" href="https://drive.google.com/drive/folders/1do97dYFiPxI9kpx2Qfw9gmZVOGtkMPE6?usp=sharing">▶ watch the shorts</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="win" id="contact" data-w="560">
+    <div class="win-bar"><span class="ico">📧</span> contact_me.txt <div class="win-btns"><button type="button" data-act="min" aria-label="Minimize">_</button><button type="button" data-act="max" aria-label="Maximize">□</button><button type="button" data-act="close" aria-label="Close">×</button></div></div>
+    <div class="win-body two">
+      <div>
+        <span class="role">business inquiries</span>
+        <p>Need an editor, thumbnails, or someone to run your channel? Drop me a line:</p>
+        <a class="mail" href="mailto:meceycolin@gmail.com">meceycolin@gmail.com</a>
+      </div>
+      <div>
+        <span class="role">find me online</span>
+        <p>Click a button ↓</p>
+        <div class="badges">
+          <a class="badge b-yt" href="https://www.youtube.com/@dotColin/videos"><b>▶</b>YouTube</a>
+          <a class="badge b-tw" href="https://x.com/dotColinn"><b>𝕏</b>Twitter</a>
+          <a class="badge b-tv" href="https://www.twitch.tv/dotColin"><b>◉</b>Twitch</a>
+          <a class="badge b-lb" href="https://letterboxd.com/dotcolin/"><b>●</b>Lbxd</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOFTWARE -->
+  <section class="win" id="software" data-w="520">
+    <div class="win-bar"><span class="ico">💿</span> softwares I use <div class="win-btns"><button type="button" data-act="min" aria-label="Minimize">_</button><button type="button" data-act="max" aria-label="Maximize">□</button><button type="button" data-act="close" aria-label="Close">×</button></div></div>
+    <div class="win-body sw-body">
+      <div class="apps">
+        <a class="app" href="https://www.adobe.com/products/premiere.html" target="_blank" rel="noopener"><span class="app-i" aria-hidden="true">🎬</span><span class="app-l">Premiere Pro</span></a>
+        <a class="app" href="https://www.adobe.com/products/photoshop.html" target="_blank" rel="noopener"><span class="app-i" aria-hidden="true">🖼️</span><span class="app-l">Photoshop</span></a>
+        <a class="app" href="https://www.adobe.com/products/audition.html" target="_blank" rel="noopener"><span class="app-i" aria-hidden="true">🎧</span><span class="app-l">Audition</span></a>
+        <a class="app" href="https://www.adobe.com/products/aftereffects.html" target="_blank" rel="noopener"><span class="app-i" aria-hidden="true">✨</span><span class="app-l">After Effects</span></a>
+        <a class="app" href="https://obsproject.com/" target="_blank" rel="noopener"><span class="app-i" aria-hidden="true">⏺️</span><span class="app-l">OBS Studio</span></a>
+        <a class="app" href="https://www.capcut.com/" target="_blank" rel="noopener"><span class="app-i" aria-hidden="true">✂️</span><span class="app-l">CapCut</span></a>
+        <a class="app" href="https://www.notion.com/" target="_blank" rel="noopener"><span class="app-i" aria-hidden="true">📓</span><span class="app-l">Notion</span></a>
+      </div>
+    </div>
+    <div class="statusbar"><span>7 object(s)</span><span>Click an icon to visit its website</span></div>
+  </section>
+
+  <!-- STIMULATION -->
+  <section class="win" id="stim" data-w="520">
+    <div class="win-bar"><span class="ico">🛹</span> stimulation.mp4 <div class="win-btns"><button type="button" data-act="min" aria-label="Minimize">_</button><button type="button" data-act="max" aria-label="Maximize">□</button><button type="button" data-act="close" aria-label="Close">×</button></div></div>
+    <div class="win-body stim-body">
+      <a class="thumb" href="https://www.youtube.com/watch?v=vTfD20dbxho" data-id="vTfD20dbxho" data-loop="1" aria-label="Play Subway Surfers gameplay"><img src="https://i.ytimg.com/vi/vTfD20dbxho/hqdefault.jpg" alt="Subway Surfers gameplay" loading="lazy" onerror="this.remove()"></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="construction"><span>🚧 always under construction 🚧</span></div><br>
+  best viewed in 1024×768 <span class="blink">▮</span><br>
+  © dotColin · hand-coded with love
+</footer>
+
+<div class="start-menu" id="startMenu" role="menu"></div>
+<header class="taskbar">
+  <button type="button" class="start" id="startBtn" aria-haspopup="true" aria-expanded="false"><span class="flag" aria-hidden="true"><i style="background:#f33"></i><i style="background:#3c3"></i><i style="background:#39f"></i><i style="background:#fc0"></i></span>Start</button>
+  <nav aria-label="Sections">
+    <a href="#clients">📁 clients</a>
+    <a href="#jrwi">💼 work</a>
+    <a href="#contact">📧 contact</a>
+  </nav>
+  <div class="tb-wins" id="tbWins"></div>
+  <button type="button" class="restore-btn" id="restoreBtn">↺ <span id="restoreCount"></span></button>
+  <div class="clock" id="clock">12:00 AM</div>
+</header>
+
+<script>
+  // taskbar clock
+  (function(){
+    var el=document.getElementById('clock');
+    function tick(){el.textContent=new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});}
+    tick(); setInterval(tick,15000);
+  })();
+  // click a thumbnail to play the video right on the page
+  function playThumb(a){
+      if(a.classList.contains('playing')) return;
+      var f=document.createElement('iframe');
+      f.src='https://www.youtube-nocookie.com/embed/'+a.dataset.id+'?autoplay=1&rel=0'+(a.dataset.loop?'&loop=1&playlist='+a.dataset.id:'');
+      f.title=a.getAttribute('aria-label')||'YouTube video';
+      f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      f.allowFullscreen=true;
+      a.classList.add('playing'); a.appendChild(f);
+  }
+  function stopVideos(w){
+    w.querySelectorAll('.thumb.playing').forEach(function(a){
+      var f=a.querySelector('iframe'); if(f) f.remove(); a.classList.remove('playing');
+    });
+  }
+  document.querySelectorAll('.thumb[data-id]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      if(a.classList.contains('playing')) return;
+      e.preventDefault(); playThumb(a);
+    });
+  });
+  // ---------- window manager ----------
+  (function(){
+    var main=document.getElementById('top');
+    var wins=[].slice.call(document.querySelectorAll('section.win'));
+    var menu=document.getElementById('startMenu'), startBtn=document.getElementById('startBtn');
+    var restoreBtn=document.getElementById('restoreBtn'), restoreCount=document.getElementById('restoreCount');
+    var tbWins=document.getElementById('tbWins'), iconBox=document.getElementById('icons');
+    var mq=window.matchMedia('(min-width: 900px) and (pointer: fine)');
+    var desk=false, z=10, MINW=280, MINH=120, firstRun=true, cascadeN=0;
+
+    function title(w){return w.querySelector('.win-bar').childNodes[1].textContent.trim();}
+    function icon(w){return w.querySelector('.win-bar .ico').textContent;}
+    function closed(w){return w.classList.contains('closed');}
+    function hidden(w){return w.classList.contains('tb-min');}
+    function visible(w){return !closed(w)&&!hidden(w);}
+
+    // resize handles
+    ['n','s','e','w','ne','nw','se','sw'].forEach(function(d){
+      wins.forEach(function(w){
+        var h=document.createElement('div'); h.className='rz rz-'+d; h.dataset.dir=d; h.setAttribute('aria-hidden','true');
+        w.appendChild(h);
+      });
+    });
+
+    function activeWin(){
+      var best=null,bz=-1;
+      wins.forEach(function(w){ if(!visible(w)) return; var zz=+w.style.zIndex||0; if(zz>bz){bz=zz;best=w;} });
+      return best;
+    }
+    function focus(w){
+      if(desk){
+        if(w) w.style.zIndex=++z;
+        wins.forEach(function(o){o.classList.toggle('inactive',o!==w);});
+      }
+      renderTaskbar();
+    }
+    function setMax(w,on){
+      w.classList.toggle('max',on);
+      var b=w.querySelector('[data-act=max]');
+      b.textContent=on?'❐':'□'; b.setAttribute('aria-label',on?'Restore':'Maximize');
+      document.body.classList.toggle('has-max',!!document.querySelector('.win.max'));
+    }
+    function setMin(w,on){
+      w.classList.toggle('min',on);
+      w.querySelector('[data-act=min]').setAttribute('aria-label',on?'Expand':'Minimize');
+    }
+    function minimize(w){
+      setMax(w,false);
+      if(desk){ w.classList.add('tb-min'); focus(activeWin()); }
+      else setMin(w,!w.classList.contains('min'));
+    }
+    // find the first empty spot (top-to-bottom, left-to-right) where a window fits without overlapping
+    function others(w){
+      return wins.filter(function(o){ return o!==w && visible(o) && !o.dataset.placing && !o.classList.contains('max'); })
+        .map(function(o){ return {l:o.offsetLeft,t:o.offsetTop,r:o.offsetLeft+o.offsetWidth,b:o.offsetTop+o.offsetHeight}; });
+    }
+    function sizeFor(w){
+      var h=JSON.parse(w.dataset.home||'null');
+      return Math.min(h?h[2]:820, +w.dataset.w||820);
+    }
+    function place(w,fromTop){
+      var width=sizeFor(w);
+      w.style.width=width+'px'; w.style.height='';
+      var H=w.offsetHeight, G=14, mr=main.getBoundingClientRect();
+      var xMin=96-mr.left, xMax=Math.max(xMin, window.innerWidth-mr.left-16-width);
+      var yMin=fromTop?16:Math.max(16,-mr.top+16);
+      var rs=others(w);
+      for(var y=yMin;y<yMin+30000;y+=12){
+        for(var x=xMin;x<=xMax;x+=12){
+          var ok=true;
+          for(var i=0;i<rs.length;i++){ var r=rs[i];
+            if(!(x+width+G<=r.l || x>=r.r+G || y+H+G<=r.t || y>=r.b+G)){ ok=false; if(r.r+G>x) x=r.r+G-12; break; }
+          }
+          if(ok){ w.style.left=x+'px'; w.style.top=y+'px'; return; }
+        }
+      }
+    }
+    function openWin(w,scroll){
+      var wasClosed=closed(w);
+      w.classList.remove('closed','tb-min'); setMin(w,false);
+      if(desk && wasClosed) place(w);
+      if(wasClosed && w.id==='stim'){ var t=w.querySelector('.thumb'); if(t) playThumb(t); }
+      focus(w); update(); growDesk();
+      if(desk){
+        var r=w.getBoundingClientRect();
+        if(r.top<0 || r.top>window.innerHeight-120) w.scrollIntoView({behavior:'smooth',block:'start'});
+        w.classList.remove('flash'); void w.offsetWidth; w.classList.add('flash'); return;
+      }
+      if(scroll){
+        w.scrollIntoView({behavior:'smooth',block:'start'});
+        w.classList.remove('flash'); void w.offsetWidth; w.classList.add('flash');
+      }
+    }
+    function closeWin(w){
+      setMax(w,false); w.classList.add('closed'); stopVideos(w);
+      focus(activeWin()); update();
+    }
+    function update(){
+      var n=wins.filter(closed).length;
+      var label='Restore '+n+' closed window'+(n>1?'s':'');
+      restoreBtn.classList.toggle('show',n>0 && !desk);
+      restoreCount.innerHTML='<span class="rl">Restore </span>'+n+'<span class="rl"> closed</span>';
+      restoreBtn.setAttribute('aria-label',label); restoreBtn.title=label;
+    }
+
+    // ----- layout: turn the stacked page into a desktop -----
+    function clearInline(el){ ['left','top','width','height','zIndex'].forEach(function(k){el.style[k]='';}); }
+    function enterDesk(){
+      var wasClosed=wins.filter(closed);
+      wins.forEach(function(w){ w.classList.remove('closed','min','tb-min'); setMax(w,false); clearInline(w); });
+      main.style.height='';
+      document.body.classList.remove('desk-mode');
+      var mr=main.getBoundingClientRect();
+      var pos=wins.map(function(el){
+        var r=el.getBoundingClientRect();
+        return {el:el,l:r.left-mr.left,t:r.top-mr.top,w:r.width};
+      });
+      var h=main.scrollHeight;
+      document.body.classList.add('desk-mode');
+      main.style.height=h+'px';
+      pos.forEach(function(p){
+        p.el.style.left=p.l+'px'; p.el.style.top=p.t+'px'; p.el.style.width=p.w+'px';
+        p.el.dataset.home=JSON.stringify([p.l,p.t,p.w]);
+      });
+      if(firstRun){ wasClosed=wins.filter(function(w){return w.id!=='welcome';}); firstRun=false; }
+      wasClosed.forEach(function(w){w.classList.add('closed');});
+      desk=true; tile();
+      document.documentElement.classList.remove('boot');
+      desk=true; z=10; cascadeN=0;
+      wins.forEach(function(w){ w.style.zIndex=++z; });
+      focus(wins.filter(visible)[0]||null); growDesk();
+    }
+    function leaveDesk(){
+      desk=false;
+      document.body.classList.remove('desk-mode');
+      wins.forEach(function(w){ clearInline(w); w.classList.remove('tb-min','inactive'); setMax(w,false); });
+      main.style.height='';
+      document.documentElement.classList.remove('boot');
+      renderTaskbar();
+    }
+    function tile(){
+      var list=wins.filter(visible);
+      list.forEach(function(w){ setMax(w,false); w.dataset.placing='1'; });
+      list.forEach(function(w,i){
+        if(w.id==='welcome' && i===0){
+          var width=sizeFor(w), mr=main.getBoundingClientRect();
+          w.style.width=width+'px'; w.style.height='';
+          w.style.left=Math.max(96-mr.left,(window.innerWidth-width)/2-mr.left)+'px'; w.style.top='32px';
+        } else place(w,true);
+        delete w.dataset.placing;
+      });
+      growDesk();
+    }
+    function arrange(){
+      if(!desk) return;
+      tile();
+      var a=activeWin(); focus(a);
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    function growDesk(){
+      if(!desk) return;
+      var bottom=window.innerHeight-(main.getBoundingClientRect().top+window.scrollY)-36;
+      wins.forEach(function(w){ if(visible(w)&&!w.classList.contains('max')) bottom=Math.max(bottom,w.offsetTop+w.offsetHeight); });
+      main.style.height=(bottom+40)+'px';
+    }
+
+    // ----- drag + resize -----
+    function track(target,e,cursor,onMove){
+      e.preventDefault();
+      try{target.setPointerCapture(e.pointerId);}catch(_){}
+      document.body.classList.add('dragging'); document.body.style.cursor=cursor;
+      function mv(ev){onMove(ev.clientX-e.clientX, ev.clientY-e.clientY);}
+      function up(){
+        target.removeEventListener('pointermove',mv);
+        target.removeEventListener('pointerup',up);
+        target.removeEventListener('pointercancel',up);
+        document.body.classList.remove('dragging'); document.body.style.cursor='';
+        growDesk();
+      }
+      target.addEventListener('pointermove',mv);
+      target.addEventListener('pointerup',up);
+      target.addEventListener('pointercancel',up);
+    }
+    wins.forEach(function(w){
+      var bar=w.querySelector('.win-bar');
+      w.addEventListener('pointerdown',function(){ if(desk && w!==activeWin()) focus(w); });
+      bar.addEventListener('pointerdown',function(e){
+        if(!desk||e.button!==0||e.target.closest('button')||w.classList.contains('max')) return;
+        var l=w.offsetLeft, t=w.offsetTop, mLeft=main.getBoundingClientRect().left;
+        track(bar,e,'default',function(dx,dy){
+          var nl=Math.min(Math.max(l+dx,-mLeft-w.offsetWidth+120), window.innerWidth-mLeft-120);
+          w.style.left=nl+'px'; w.style.top=Math.max(0,t+dy)+'px';
+        });
+      });
+      w.querySelectorAll('.rz').forEach(function(h){
+        h.addEventListener('pointerdown',function(e){
+          if(!desk||e.button!==0||w.classList.contains('max')) return;
+          e.stopPropagation(); focus(w);
+          var d=h.dataset.dir, l=w.offsetLeft, t=w.offsetTop, W=w.offsetWidth, H=w.offsetHeight;
+          track(h,e,getComputedStyle(h).cursor,function(dx,dy){
+            var nl=l,nt=t,nw=W,nh=H;
+            if(d.indexOf('e')>-1) nw=Math.max(MINW,W+dx);
+            if(d.indexOf('s')>-1) nh=Math.max(MINH,H+dy);
+            if(d.indexOf('w')>-1){ nw=Math.max(MINW,W-dx); nl=l+W-nw; }
+            if(d.indexOf('n')>-1){ nh=Math.max(MINH,H-dy); nt=t+H-nh; if(nt<0){nh+=nt;nt=0;} }
+            w.style.left=nl+'px'; w.style.top=nt+'px'; w.style.width=nw+'px'; w.style.height=nh+'px';
+          });
+        });
+      });
+      // title bar buttons
+      w.querySelector('.win-btns').addEventListener('click',function(e){
+        var b=e.target.closest('button'); if(!b) return;
+        var a=b.dataset.act;
+        if(a==='close') closeWin(w);
+        if(a==='min') minimize(w);
+        if(a==='max'){ setMin(w,false); wins.forEach(function(o){if(o!==w) setMax(o,false)}); setMax(w,!w.classList.contains('max')); focus(w); growDesk(); }
+      });
+      bar.addEventListener('dblclick',function(e){
+        if(e.target.closest('button')) return;
+        w.querySelector('[data-act=max]').click();
+      });
+    });
+
+    // ----- taskbar buttons (desktop) -----
+    function renderTaskbar(){
+      tbWins.innerHTML='';
+      if(!desk) return;
+      var top=activeWin();
+      wins.forEach(function(w){
+        if(closed(w)) return;
+        var b=document.createElement('button'); b.type='button';
+        b.className='tb-win'+(w===top?' active':'');
+        b.innerHTML='<span class="ico"></span><span class="t"></span>';
+        b.querySelector('.ico').textContent=icon(w); b.querySelector('.t').textContent=title(w);
+        b.title=title(w);
+        b.addEventListener('click',function(){
+          if(hidden(w)) openWin(w,false);
+          else if(w===activeWin()) minimize(w);
+          else focus(w);
+        });
+        tbWins.appendChild(b);
+      });
+    }
+
+    // ----- desktop icons -----
+    wins.forEach(function(w){
+      var b=document.createElement('button'); b.type='button'; b.className='dicon';
+      b.innerHTML='<span class="i"></span><span class="l"></span>';
+      b.querySelector('.i').textContent=icon(w); b.querySelector('.l').textContent=title(w);
+      b.title='Double-click to open';
+      b.addEventListener('click',function(e){
+        e.stopPropagation();
+        iconBox.querySelectorAll('.dicon').forEach(function(o){o.classList.toggle('sel',o===b);});
+      });
+      b.addEventListener('dblclick',function(){ openWin(w,true); });
+      b.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); openWin(w,true);} });
+      iconBox.appendChild(b);
+    });
+    document.addEventListener('click',function(e){
+      if(!e.target.closest('.dicon')) iconBox.querySelectorAll('.dicon').forEach(function(o){o.classList.remove('sel');});
+    });
+
+    restoreBtn.addEventListener('click',function(){ wins.filter(closed).forEach(function(w){openWin(w,false);}); });
+    document.addEventListener('keydown',function(e){
+      if(e.key!=='Escape') return;
+      wins.forEach(function(w){setMax(w,false)}); toggleMenu(false); growDesk();
+    });
+    // any #link to a window reopens it first
+    document.addEventListener('click',function(e){
+      var a=e.target.closest('a[href^="#"]'); if(!a) return;
+      var t=document.getElementById(a.getAttribute('href').slice(1));
+      var w=t&&t.closest('section.win'); if(!w) return;
+      e.preventDefault(); wins.forEach(function(o){setMax(o,false)}); openWin(w,true);
+    });
+
+    // ----- start menu -----
+    function item(ico,text,state,fn){
+      var b=document.createElement('button'); b.type='button'; b.setAttribute('role','menuitem');
+      b.innerHTML='<span class="ico"></span><span class="t"></span><span class="state"></span>';
+      b.querySelector('.ico').textContent=ico; b.querySelector('.t').textContent=text;
+      b.querySelector('.state').textContent=state||'';
+      b.addEventListener('click',function(){ toggleMenu(false); fn(); });
+      menu.appendChild(b);
+    }
+    function buildMenu(){
+      menu.innerHTML='';
+      wins.forEach(function(w){
+        var st=closed(w)?'closed':(hidden(w)||w.classList.contains('min'))?'minimized':'';
+        item(icon(w),title(w),st,function(){ wins.forEach(function(o){setMax(o,false)}); openWin(w,true); });
+      });
+      menu.appendChild(document.createElement('hr'));
+      if(desk) item('🗂️','Arrange windows','',arrange);
+      item('🔄','Restore all windows','',function(){
+        wins.forEach(function(w){ setMax(w,false); openWin(w,false); });
+        if(desk) arrange(); else window.scrollTo({top:0,behavior:'smooth'});
+      });
+    }
+    function toggleMenu(on){
+      if(on) buildMenu();
+      menu.classList.toggle('open',on); startBtn.classList.toggle('on',on);
+      startBtn.setAttribute('aria-expanded',on?'true':'false');
+    }
+    startBtn.addEventListener('click',function(e){e.stopPropagation(); toggleMenu(!menu.classList.contains('open'));});
+    document.addEventListener('click',function(e){ if(!menu.contains(e.target) && e.target!==startBtn) toggleMenu(false); });
+
+    // ----- mode switching -----
+    function setMode(){ if(mq.matches) enterDesk(); else leaveDesk(); update(); }
+    if(mq.addEventListener) mq.addEventListener('change',setMode); else mq.addListener(setMode);
+    var loaded=new Promise(function(r){ if(document.readyState==='complete') r(); else window.addEventListener('load',r); });
+    Promise.all([loaded,(document.fonts&&document.fonts.ready)||Promise.resolve()]).then(setMode);
+    update();
+  })();
+  // sparkle cursor trail
+  (function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var chars=['✦','✧','★','✩','♡'], cols=['#fff','#9fe6ff','#00ffff','#ffff66','#5fb8ff'], last=0;
+    document.addEventListener('mousemove',function(e){
+      var now=Date.now(); if(now-last<45) return; last=now;
+      var s=document.createElement('span'); s.className='spark';
+      s.textContent=chars[Math.floor(Math.random()*chars.length)];
+      s.style.color=cols[Math.floor(Math.random()*cols.length)];
+      s.style.left=(e.clientX+6)+'px'; s.style.top=(e.clientY+6)+'px';
+      document.body.appendChild(s); setTimeout(function(){s.remove()},800);
+    });
+  })();
+</script>
+</body>
+</html>
