@@ -1,2 +1,2 @@
-# dotcolin
+# dotColin
 dotColin portfolio
