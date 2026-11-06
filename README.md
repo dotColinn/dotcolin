@@ -1,2 +1,0 @@
-# dotColin
-dotColin portfolio
